@@ -1,0 +1,18 @@
+---
+public_network: "10.10.0.0/24"
+public_gateway: "10.10.0.1"
+master:
+  hostname: "master"
+  ipv4: "10.10.0.11"
+  memory: 1024
+  cpus: 1
+node1:
+  hostname: "node1"
+  ipv4: "10.10.0.12"
+  memory: 1024
+  cpus: 1
+node2:
+  hostname: "node2"
+  ipv4: "10.10.0.13"
+  memory: 1024
+  cpus: 1
