@@ -5,31 +5,35 @@
         <value>mapreduce_shuffle</value>
     </property>
     <property>
-        <name>yarn.log-aggregation-enable</name>
-        <value>true</value>
+        <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
     <property>
-        <name>mapreduce.jobhistory.address</name>
-        <value>10.10.0.11:10020</value>
+        <name>yarn.resourcemanager.address</name>
+        <value>master:8032</value>
     </property>
     <property>
-        <name>mapreduce.jobhistory.webapp.address</name>
-        <value>10.10.0.11:19888</value>
+        <name>yarn.resourcemanager.scheduler.address</name>
+        <value>master:8030</value>
     </property>
     <property>
-        <name>yarn.log.server.url</name>
-        <value>http://10.10.0.11:19888/jobhistory/logs/</value>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>master:8031</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.admin.address</name>
+        <value>master:8033</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>master:8088</value>
     </property>
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>10.10.0.11</value>
+        <value>master</value>
     </property>
     <property>
-        <name>yarn.timeline-service.hostname</name>
-        <value>10.10.0.11</value>
-    </property>
-    <property>
-        <name>yarn.nodemanager.delete.debug-delay-sec</name>
-        <value>86400</value>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>2048</value>
     </property>
 </configuration>

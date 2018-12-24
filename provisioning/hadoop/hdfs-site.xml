@@ -10,15 +10,7 @@
         <value>file:///var/hadoop/hadoop-datanode</value>
     </property>
     <property>
-        <name>dfs.webhdfs.enabled</name>
-        <value>true</value>
-    </property>
-    <property>
-        <name>dfs.permissions.enabled</name>
-        <value>false</value>
-    </property>
-    <property>
-        <name>dfs.namenode.handler.count</name>
-        <value>25</value>
+        <name>dfs.replication</name>
+        <value>3</value>
     </property>
 </configuration>

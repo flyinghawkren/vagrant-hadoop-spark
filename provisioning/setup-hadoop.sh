@@ -23,9 +23,6 @@ function configHadoop {
     
     echo "copying over hadoop configuration files"
     cp -f $HADOOP_RES_DIR/* $HADOOP_CONF
-
-    sed -i "s/10.211.55.101/$1/g" $HADOOP_CONF/core-site.xml
-    sed -i "s/10.211.55.101/$1/g" $HADOOP_CONF/yarn-site.xml
 }
 
 function setupEnvVars {
@@ -50,13 +47,9 @@ function formatHdfs {
 
 function startDaemons {
     echo "starting Hadoop daemons"
-    $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode
-    $HADOOP_PREFIX/sbin/hadoop-daemons.sh --config $HADOOP_CONF_DIR --script hdfs start datanode
-    $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager
-    $HADOOP_YARN_HOME/sbin/yarn-daemons.sh --config $HADOOP_CONF_DIR start nodemanager
-    $HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR
-    $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR
-
+    
+    $HADOOP_PREFIX/sbin/start-all.sh
+    
     echo "waiting for HDFS to come up"
     # loop until at least HDFS is up
     cmd="hdfs dfs -ls /"
@@ -96,11 +89,10 @@ function setupHdfs {
 }
 
 function setupHadoop {
-    local MasterIP=$1
     echo "setup hadoop"
 
     installHadoop
-    configHadoop $MasterIP
+    configHadoop
     setupEnvVars
     formatHdfs
     startDaemons

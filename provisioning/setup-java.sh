@@ -12,8 +12,6 @@ function installRemoteJava {
     sudo apt-get install -y openjdk-8-jdk
 }
 
-
-
 function installJava {
     if resourceExists $JAVA_ARCHIVE; then
         installLocalJava

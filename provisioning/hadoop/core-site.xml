@@ -3,6 +3,14 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://10.211.55.101</value>
+        <value>hdfs://master:9000</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/var/hadoop/tmp</value>
+    </property>
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>131702</value>
     </property>
 </configuration>

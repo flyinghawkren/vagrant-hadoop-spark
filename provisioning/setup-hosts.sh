@@ -29,10 +29,17 @@ Host *
 StrictHostKeyChecking no
 UserKnownHostsFile=/dev/null
 CONFIG
+
+    chmod 600 ~/.ssh/authorized_keys
+}
+
+function closeFirewall {
+    systemctl stop firewalld.service
 }
 
 createHosts
 createSSHKey
+closeFirewall
 
 # Restore xtrace
 $XTRACE
