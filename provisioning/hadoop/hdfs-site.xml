@@ -11,6 +11,10 @@
     </property>
     <property>
         <name>dfs.replication</name>
-        <value>3</value>
+        <value>1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>master:9001</value>
     </property>
 </configuration>

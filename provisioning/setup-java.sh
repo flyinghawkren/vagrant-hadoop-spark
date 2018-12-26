@@ -1,9 +1,11 @@
 #!/bin/bash
 
+source "/vagrant/provisioning/common.sh"
+
 function installLocalJava {
     echo "installing oracle jdk"
     FILE=/vagrant/resources/$JAVA_ARCHIVE
-    tar -xzf $FILE -C /usr/local
+    sudo tar -xzf $FILE -C /usr/local
 }
 
 function installRemoteJava {
@@ -25,12 +27,12 @@ function setupJava {
     installJava
 
     if resourceExists $JAVA_ARCHIVE; then
-        ln -s /usr/local/jdk1.8.0_191 /usr/local/java
+        sudo ln -s /usr/local/jdk1.8.0_191 /usr/local/java
     else
-        ln -s /usr/lib/jvm/jre /usr/local/java
+        sudo ln -s /usr/lib/jvm/jre /usr/local/java
     fi
 
     echo "creating java environment variables"
-    echo export JAVA_HOME=/usr/local/java >> /etc/profile.d/java.sh
-    echo export PATH=\${JAVA_HOME}/bin:\${PATH} >> /etc/profile.d/java.sh
+    echo export JAVA_HOME=/usr/local/java | sudo tee /etc/profile.d/java.sh
+    echo export PATH=\${JAVA_HOME}/bin:\${PATH} | sudo tee /etc/profile.d/java.sh
 }

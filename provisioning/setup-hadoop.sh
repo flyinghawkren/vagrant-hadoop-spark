@@ -1,34 +1,17 @@
 #!/bin/bash
 
+source "/vagrant/provisioning/common.sh"
+
 function installLocalHadoop {
     echo "install hadoop from local file"
     FILE=/vagrant/resources/$HADOOP_ARCHIVE
-    tar -xzf $FILE -C /usr/local
+    sudo tar -xzf $FILE -C /usr/local
 }
 
 function installRemoteHadoop {
     echo "install hadoop from remote file"
-    curl -sS -o /vagrant/resources/$HADOOP_ARCHIVE -O -L $HADOOP_MIRROR_DOWNLOAD
-    tar -xzf /vagrant/resources/$HADOOP_ARCHIVE -C /usr/local
-}
-
-function configHadoop {
-    echo "creating hadoop directories"
-    mkdir /var/hadoop
-    mkdir /var/hadoop/hadoop-datanode
-    mkdir /var/hadoop/hadoop-namenode
-    mkdir /var/hadoop/mr-history
-    mkdir /var/hadoop/mr-history/done
-    mkdir /var/hadoop/mr-history/tmp
-    
-    echo "copying over hadoop configuration files"
-    cp -f $HADOOP_RES_DIR/* $HADOOP_CONF
-}
-
-function setupEnvVars {
-    echo "creating hadoop environment variables"
-    cp -f $HADOOP_RES_DIR/hadoop.sh /etc/profile.d/hadoop.sh
-    . /etc/profile.d/hadoop.sh
+    sudo curl -sS -o /vagrant/resources/$HADOOP_ARCHIVE -O -L $HADOOP_MIRROR_DOWNLOAD
+    sudo tar -xzf /vagrant/resources/$HADOOP_ARCHIVE -C /usr/local
 }
 
 function installHadoop {
@@ -37,7 +20,30 @@ function installHadoop {
     else
         installRemoteHadoop
     fi
-    ln -s /usr/local/$HADOOP_VERSION /usr/local/hadoop
+    sudo ln -s /usr/local/$HADOOP_VERSION /usr/local/hadoop
+}
+
+function configHadoop {
+    echo "creating hadoop directories"
+    sudo mkdir /var/hadoop
+
+    sudo chown vagrant /var/hadoop
+    sudo chown -R vagrant /usr/local/$HADOOP_VERSION
+    
+    mkdir /var/hadoop/hadoop-datanode
+    mkdir /var/hadoop/hadoop-namenode
+    mkdir /var/hadoop/mr-history
+    mkdir /var/hadoop/mr-history/done
+    mkdir /var/hadoop/mr-history/tmp
+    
+    echo "copying over hadoop configuration files"
+    sudo cp -f $HADOOP_RES_DIR/* $HADOOP_CONF
+}
+
+function setupEnvVars {
+    echo "creating hadoop environment variables"
+    sudo cp -f $HADOOP_RES_DIR/hadoop.sh /etc/profile.d/hadoop.sh
+    . /etc/profile.d/hadoop.sh
 }
 
 function formatHdfs {
@@ -48,7 +54,8 @@ function formatHdfs {
 function startDaemons {
     echo "starting Hadoop daemons"
     
-    $HADOOP_PREFIX/sbin/start-all.sh
+    $HADOOP_PREFIX/sbin/start-dfs.sh
+    $HADOOP_PREFIX/sbin/start-yarn.sh
     
     echo "waiting for HDFS to come up"
     # loop until at least HDFS is up
@@ -71,7 +78,7 @@ function startDaemons {
     fi
 
     echo "listing all Java processes"
-    jps
+    /usr/local/java/bin/jps
 }
 
 function setupHdfs {
@@ -89,14 +96,17 @@ function setupHdfs {
 }
 
 function setupHadoop {
-    echo "setup hadoop"
+    echo "setup hadoop: $1"
 
     installHadoop
     configHadoop
     setupEnvVars
-    formatHdfs
-    startDaemons
-    setupHdfs
+
+    if [[ "$1" == "master" ]]; then
+        formatHdfs
+        startDaemons
+        setupHdfs
+    fi
 
     echo "hadoop setup complete"
 }
