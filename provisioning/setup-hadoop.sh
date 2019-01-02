@@ -38,9 +38,7 @@ function configHadoop {
     
     echo "copying over hadoop configuration files"
     sudo cp -f $HADOOP_RES_DIR/* $HADOOP_CONF
-}
 
-function setupEnvVars {
     echo "creating hadoop environment variables"
     sudo cp -f $HADOOP_RES_DIR/hadoop.sh /etc/profile.d/hadoop.sh
     . /etc/profile.d/hadoop.sh
@@ -100,7 +98,6 @@ function setupHadoop {
 
     installHadoop
     configHadoop
-    setupEnvVars
 
     if [[ "$1" == "master" ]]; then
         formatHdfs

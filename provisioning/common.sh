@@ -11,19 +11,19 @@ HADOOP_ARCHIVE=$HADOOP_VERSION.tar.gz
 HADOOP_MIRROR_DOWNLOAD=http://archive.apache.org/dist/hadoop/core/$HADOOP_VERSION/$HADOOP_ARCHIVE
 HADOOP_RES_DIR=/vagrant/provisioning/hadoop
 
+# spark
+SPARK_VERSION=spark-2.4.0
+SPARK_ARCHIVE=$SPARK_VERSION-bin-hadoop2.7.tgz
+SPARK_MIRROR_DOWNLOAD=http://archive.apache.org/dist/spark/$SPARK_VERSION/$SPARK_VERSION-bin-hadoop2.7.tgz
+SPARK_RES_DIR=/vagrant/provisioning/spark
+SPARK_CONF_DIR=/usr/local/spark/conf
+
 # hive
 HIVE_VERSION=hive-1.2.1
 HIVE_ARCHIVE=apache-$HIVE_VERSION-bin.tar.gz
 HIVE_MIRROR_DOWNLOAD=http://archive.apache.org/dist/hive/$HIVE_VERSION/$HIVE_ARCHIVE
 HIVE_RES_DIR=/vagrant/provisioning/hive
 HIVE_CONF=/usr/local/hive/conf
-
-# spark
-SPARK_VERSION=spark-1.6.0
-SPARK_ARCHIVE=$SPARK_VERSION-bin-hadoop2.tgz
-SPARK_MIRROR_DOWNLOAD=http://archive.apache.org/dist/spark/$SPARK_VERSION/$SPARK_VERSION-bin-hadoop2.6.tgz
-SPARK_RES_DIR=/vagrant/provisioning/spark
-SPARK_CONF_DIR=/usr/local/spark/conf
 
 # ssh
 SSH_RES_DIR=/vagrant/resources/ssh

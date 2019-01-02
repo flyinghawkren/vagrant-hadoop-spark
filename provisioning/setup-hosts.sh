@@ -30,8 +30,9 @@ function configSSHKey {
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
     cat << CONFIG >> ~/.ssh/config
 Host *
-StrictHostKeyChecking no
-UserKnownHostsFile=/dev/null
+  StrictHostKeyChecking   no
+  LogLevel                ERROR
+  UserKnownHostsFile      /dev/null
 CONFIG
 
     chmod 600 ~/.ssh/id_rsa
