@@ -1,0 +1,19 @@
+[Unit]
+Description=Apache Hadoop Master and Slave Servers
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+User=vagrant
+Type=forking
+ExecStart=/usr/local/hadoop/sbin/start-all.sh
+ExecStop=/usr/local/hadoop/sbin/stop-all.sh
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target
