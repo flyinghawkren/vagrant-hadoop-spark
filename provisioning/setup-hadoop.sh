@@ -42,6 +42,8 @@ function configHadoop {
     echo "creating hadoop environment variables"
     sudo cp -f $HADOOP_RES_DIR/hadoop.sh /etc/profile.d/hadoop.sh
     . /etc/profile.d/hadoop.sh
+
+    sudo cp -f $HADOOP_RES_DIR/hadoop.service /lib/systemd/system/
 }
 
 function formatHdfs {
@@ -52,8 +54,8 @@ function formatHdfs {
 function startDaemons {
     echo "starting Hadoop daemons"
     
-    $HADOOP_PREFIX/sbin/start-dfs.sh
-    $HADOOP_PREFIX/sbin/start-yarn.sh
+    sudo systemctl enable hadoop.service
+    sudo systemctl start hadoop.service
     
     echo "waiting for HDFS to come up"
     # loop until at least HDFS is up

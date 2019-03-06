@@ -38,6 +38,8 @@ function configSpark {
     echo "creating spark environment variables"
     sudo cp -f $SPARK_RES_DIR/spark.sh /etc/profile.d/spark.sh
     . /etc/profile.d/spark.sh
+
+    sudo cp -f $SPARK_RES_DIR/spark.service /lib/systemd/system/
 }
 
 
@@ -50,8 +52,8 @@ function setupHistoryServer {
 
 function startSparkService {
     echo "starting Spark service"
-    /usr/local/spark/sbin/start-master.sh
-    /usr/local/spark/sbin/start-slaves.sh
+    sudo systemctl enable spark.service
+    sudo systemctl start spark.service
 }
 
 function setupSpark {
